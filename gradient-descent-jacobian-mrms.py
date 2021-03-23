@@ -106,19 +106,26 @@ vectors = unique_strings(vectors)
 for vector in vectors:
     normOfR = normOfR.replace(vector, 'np.array(' + vector + ')')
 print("Squared norm of r after replacement:", normOfR)
-for i in range(0, p_step_bdf):
-    exec("alpha" + str(i) + " = sp.Symbol('alpha" + str(i) + "')")
-    exec("beta" + str(i) + " = sp.Symbol('beta" + str(i) + "')")
+alpha0 = sp.Symbol('alpha0')
+alpha1 = sp.Symbol('alpha1')
+alpha2 = sp.Symbol('alpha2')
+beta0 = sp.Symbol('beta0')
+beta1 = sp.Symbol('beta1')
+beta2 = sp.Symbol('beta2')
 normOfR = str(eval(normOfR))
 print("Squared norm of r after simplify:", normOfR)
 
 
 def gradient():
+    alpha0 = sp.Symbol('alpha0')
     dif_alpha = sp.diff(normOfR, alpha0)
+    beta0 = sp.Symbol('beta0')
     dif_beta = sp.diff(normOfR, beta0)
     alphas = [dif_alpha]
     betas = [dif_beta]
     for i in range(1, p_step_bdf):
+        exec("alpha" + str(i) + " = sp.Symbol('alpha" + str(i) + "')")
+        exec("beta" + str(i) + " = sp.Symbol('beta" + str(i) + "')")
         dif_alpha = eval('sp.diff(normOfR, alpha'+str(i)+')')
         dif_beta = eval('sp.diff(normOfR, beta'+str(i)+')')
         alphas.append(dif_alpha)
