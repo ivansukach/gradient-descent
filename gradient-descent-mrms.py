@@ -1,7 +1,9 @@
 import re as regular
 from pylab import *
 import sympy as sp
+import time
 
+start_time = time.time()
 size_of_y = 5
 p_step_bdf = 3
 tau = 0.01
@@ -128,3 +130,4 @@ def gradient():
 
 grad = gradient()
 print("gradient: ", grad)
+print("--- %s seconds ---" % (time.time() - start_time))
